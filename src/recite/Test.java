@@ -1,11 +1,11 @@
-package recite.copy;
+package recite;
 
 public class Test {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		String infile = "G:\\study\\javaworks\\recite\\text\\chaoslist.csv";
-		String outfile = "G:\\study\\javaworks\\recite\\text\\output.csv";
+		String infile = "chaoslist.csv";
+		String outfile = "output.csv";
 		WordList wl = new WordList(infile, outfile);
 		
 		testRead(wl);
@@ -23,7 +23,7 @@ public class Test {
 		int length = wl.wordlist.size();
 		for (int i = 0; i < length; i++){
 			Word w = wl.next();
-			System.out.println(w.word+" ");
+			System.out.println(w.getWord()+" ");
 		}
 	}
 
