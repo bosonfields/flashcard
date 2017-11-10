@@ -3,6 +3,7 @@ package recite;
 public class Word {
 	private String word;
 	private String[] explanations;
+	//EXP_SPLIT is a signal in the word's explanation, which can split deferent meaning for one word
 	static public String EXP_SPLIT = "#";
 	private boolean fail;
 	
