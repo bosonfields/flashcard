@@ -32,8 +32,8 @@ public class Recite extends JFrame implements ActionListener{
 
     private void initGUI(){
 
-	    jp1=new JPanel();
-	    jp1.setBounds(100,50,1000,200);
+	jp1=new JPanel();
+	jp1.setBounds(100,50,1000,200);
     	jp2=new JPanel();
     	jp2.setBounds(100,200,1000,450);
     	jp3=new JPanel();
@@ -41,16 +41,14 @@ public class Recite extends JFrame implements ActionListener{
     	jp4=new JPanel();
     	jp4.setBounds(450,710,300,30);
     	
-    	
-    	//words & explanation
+    	//words & explanation & remnant words
+	    
     	war=new JLabel();
     	war.setFont(new java.awt.Font("Dialog",1,100));
     	
         explanation=new JTextPane();
         explanation.setPreferredSize(new Dimension(1000,450));
         explanation.setFont(new java.awt.Font("Dialog",1,30));
-        
-        
         
         count=new JLabel("Remain: ");
         count.setFont(new java.awt.Font("Dialog",1,20));
@@ -62,13 +60,16 @@ public class Recite extends JFrame implements ActionListener{
         jb2=new JButton("forget");  
         jb3=new JButton("next");
         jb4=new JButton("export");
-        // adding listener
+        
+	// adding listener
         
         jb1.addActionListener(this);
         jb2.addActionListener(this);
         jb3.addActionListener(this);
     	jb4.addActionListener(this);
-
+        
+	// adding a key listener at button"next"
+	
     	jb3.addKeyListener(new KeyAdapter(){
 			public void keyPressed(KeyEvent e){
 				if(!wl.checkRemain()){
@@ -82,6 +83,8 @@ public class Recite extends JFrame implements ActionListener{
 			}
         });
 
+	//setLayout and adding to panel
+	    
         this.setLayout(new GridLayout(3,1));
         
         jp1.add(war);  
@@ -124,6 +127,9 @@ public class Recite extends JFrame implements ActionListener{
 			nextButton();
 		}
  	}
+	
+	//when a word is not remember, get into shuffle process
+	
 	public void forgetButton(){
 		explanation.setText(w.displayExplanations());
 		if(signal!=displayMode.Forgetdisplay){
@@ -131,6 +137,9 @@ public class Recite extends JFrame implements ActionListener{
 			signal=displayMode.Forgetdisplay;
 		}
 	}
+	
+	//for "next"button, display the explanation at first, then switch to the next word after the second press
+	
 	public void nextButton(){
 		if(signal!=displayMode.Notshow){
 			wl.pass(w);
