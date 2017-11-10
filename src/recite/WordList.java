@@ -14,6 +14,8 @@ import java.io.IOException;
 
 
 public class WordList {
+	
+	//threshhold is a number of the remnant words, where words will not be removed until the all the remnant words can get remembered at one course
 	private static final int THRESHOLD = 5;
 	String infile;
 	String outfile;
