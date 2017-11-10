@@ -3,7 +3,7 @@ package recite;
 public class Word {
 	private String word;
 	private String[] explanations;
-	static public String EXP_SPLIT = ":";
+	static public String EXP_SPLIT = "#";
 	private boolean fail;
 	
 	public Word(String word, String explanation, boolean fail){
@@ -18,6 +18,10 @@ public class Word {
 
 	public void forget(){
 		this.fail = true;
+	}
+	
+	public void remember(){
+		this.fail=false;
 	}
 
 	// Getters and Setters
