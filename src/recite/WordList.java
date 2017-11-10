@@ -21,7 +21,6 @@ public class WordList {
 	int index;
 	int remain;
 	boolean finalMode = false;
-//	private static int MAX_WORDLIST = 3000;
 	
 	public WordList(String infile, String outfile){
 		this.infile = infile;
@@ -42,7 +41,7 @@ public class WordList {
 			String line = br.readLine();
 			while(line != null){
 				String[] parts = line.split(",");
-				Word w = new Word(parts[0],parts[1], Boolean.valueOf(parts[2].trim()));
+				Word w = new Word(parts[0].trim(),parts[1], Boolean.valueOf(parts[2].trim()));
 				if (!w.getFail()){
 					wordlist.add(w);
 				}
@@ -89,6 +88,7 @@ public class WordList {
 	public void pass(Word w){
 		if (this.finalMode){
 			this.index++;
+			this.remain--;
 			return;
 		}
 		if (!w.getFail()){
@@ -100,6 +100,8 @@ public class WordList {
 	public void forget(Word w){
 		if (this.finalMode){
 			this.shuffle();
+			this.remain=this.THRESHOLD;
+			return;
 		}
 		this.index++;
 		w.forget();
