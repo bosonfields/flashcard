@@ -14,8 +14,12 @@ public class Recite extends JFrame implements ActionListener{
 	JTextPane explanation;
 	JPanel jp1,jp2,jp3,jp4;
         JLabel war,count,countNum;
+	
+	//chaoslist & output is the path for reading the words and exporting the remnant words
 	String infile = "chaoslist.csv";
 	String outfile = "output.csv";
+	
+	
 	WordList wl = new WordList(infile, outfile);
 	Word w = wl.next();
 	boolean finalMode = false;
