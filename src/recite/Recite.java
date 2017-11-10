@@ -13,17 +13,15 @@ public class Recite extends JFrame implements ActionListener{
 	JButton jb1,jb2,jb3,jb4;
 	JTextPane explanation;
 	JPanel jp1,jp2,jp3,jp4;
-    JLabel war,count,countNum;
+        JLabel war,count,countNum;
 	String infile = "chaoslist.csv";
 	String outfile = "output.csv";
 	WordList wl = new WordList(infile, outfile);
 	Word w = wl.next();
 	boolean finalMode = false;
-	// boolean choice=true;
-//    words sb = new words();
-//    int randomNum=0, forgetingNum=0, reciteCount=3, stringentRecit=1, threshold=4, stringentForget=threshold;
-    
-    
+	enum displayMode{Forgetdisplay, Nextdisplay, Notshow};
+	displayMode signal=displayMode.Notshow;
+
 	public static void main(String[] args){    
 		Recite win = new Recite();
 	}
@@ -71,28 +69,15 @@ public class Recite extends JFrame implements ActionListener{
         jb3.addActionListener(this);
     	jb4.addActionListener(this);
 
-    	// jb3.getInputMap().put(KeyStroke.getKeyStroke("RIGHT"), "next");
-    	// jb3.getInputMap().put(KeyStroke.getKeyStroke("X"), "next");
-
-    	// jb2.getInputMap().put(KeyStroke.getKeyStroke("DOWN"), "forget");
-    	// jb2.getInputMap().put(KeyStroke.getKeyStroke("Z"), "forget");
-
     	jb3.addKeyListener(new KeyAdapter(){
 			public void keyPressed(KeyEvent e){
 				if(!wl.checkRemain()){
 					finalMode = true;
 				}
-
 				if(e.getKeyCode() == KeyEvent.VK_DOWN||e.getKeyCode() == KeyEvent.VK_Z){
-					explanation.setText(w.displayExplanations());
-					wl.forget(w);
+					forgetButton();
 				} else if(e.getKeyCode() == KeyEvent.VK_RIGHT||e.getKeyCode() == KeyEvent.VK_X){
-					wl.pass(w);
-					w = wl.next();
-				    war.setText(w.getWord());
-				    explanation.setText(null);
-				    String s = String.valueOf(wl.remain);
-					countNum.setText(s);
+					nextButton();
 				}
 			}
         });
@@ -134,20 +119,36 @@ public class Recite extends JFrame implements ActionListener{
 			// System.out.println("W");
 			this.wl.write();
 		}else if(e.getActionCommand()=="forget"){
-			explanation.setText(w.displayExplanations());
-			wl.forget(w);
+			forgetButton();
 		}else if(e.getActionCommand()=="next"){
+			nextButton();
+		}
+ 	}
+	public void forgetButton(){
+		explanation.setText(w.displayExplanations());
+		if(signal!=displayMode.Forgetdisplay){
+			wl.forget(w);
+			signal=displayMode.Forgetdisplay;
+		}
+	}
+	public void nextButton(){
+		if(signal!=displayMode.Notshow){
 			wl.pass(w);
 			w = wl.next();
-
 			if (w == null) {
 				JOptionPane.showMessageDialog(null,"Game Over!","Confirm",JOptionPane.WARNING_MESSAGE);  
 			}else {
-			    war.setText(w.getWord());
-			    explanation.setText(null);
-			    String s = String.valueOf(wl.remain);
+				war.setText(w.getWord());
+				explanation.setText(null);
+				String s = String.valueOf(wl.remain);
 				countNum.setText(s);	
+				signal=displayMode.Notshow;
 			}
 		}
- 	}
+		else{
+			explanation.setText(w.displayExplanations());
+			signal=displayMode.Nextdisplay;
+			w.remember();
+		}
+	}
 }
